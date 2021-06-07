@@ -1,0 +1,33 @@
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bg {
+    background: rgb(20, 20, 20)
+}
+.bganimation {
+    background: linear-gradient(45deg, rgb(202,70,70) -50%, rgb(20, 20, 20) 40%, rgb(20, 20, 20) 60%, rgb(70, 116, 202) 150%);
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+.pure-button {
+    background-color: rgb(202,70,70)
+}
+.pure-button-primary {
+    background-color: rgb(202,70,70)
+}
+
+a.pure-button- {
+    background-color: rgb(202,70,70)
+}
+
+a.pure-button-primary {
+    background-color: rgb(202,70,70)
+}
+
+.pure-form legend {
+    color: rgb(202,70,70)
+}
+
+.w3-animate-opacity{
+    color: black;
+}
