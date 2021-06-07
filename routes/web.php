@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('home');
 // });
 
-Route::get('/', [HomeController::class, 'generateView']);
+Route::get('/', [HomeController::class, 'generateView'])->name('home');
 
 Route::get('/login', [LoginController::class, 'generateView']);
 
@@ -29,3 +29,5 @@ Route::get('/register', [RegisterController::class, 'generateView']);
 Route::get('/login/auth', [LoginController::class, 'auth'])->name('login.auth');
 
 Route::get('/register/save', [RegisterController::class, 'save'])->name('register.save');
+
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout');

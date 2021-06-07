@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+
+
     public function generateView()
     {
-        return view('home');
+        $user = User::where('iduser', '=', session('LoggedUser'))->first();
+        return view('home', [
+            'user' => $user
+        ]);
+    }
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        return redirect()->route('home');
     }
 }

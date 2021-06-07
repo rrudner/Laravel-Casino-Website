@@ -27,7 +27,7 @@ class LoginController extends Controller
         } else {
             if ($userInfo->password == $request->password) {
 
-                $request->session()->put('LoggedUser', $userInfo->id_user);
+                $request->session()->put('LoggedUser', $userInfo->iduser);
                 return redirect('/');
             } else {
 
