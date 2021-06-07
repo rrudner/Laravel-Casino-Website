@@ -27,3 +27,5 @@ Route::get('/login', [LoginController::class, 'generateView']);
 Route::get('/register', [RegisterController::class, 'generateView']);
 
 Route::get('/login/auth', [LoginController::class, 'auth'])->name('login.auth');
+
+Route::get('/register/save', [RegisterController::class, 'save'])->name('register.save');
