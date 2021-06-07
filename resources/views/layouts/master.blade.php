@@ -15,7 +15,7 @@
     <div class="bg">
         <div class="bganimation w3-display-container w3-animate-opacity w3-text-white">
             <div class="w3-display-topleft w3-padding-large w3-xlarge">
-                Logo
+                {{ config('app.name') }}
             </div>
             <div class="w3-display-middle">
                 <div animated-content>

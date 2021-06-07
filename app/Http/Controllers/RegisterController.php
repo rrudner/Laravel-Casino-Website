@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Auth\Events\Login;
 
 class RegisterController extends Controller
 {
@@ -41,10 +42,10 @@ class RegisterController extends Controller
         $save = $users->save();
 
         if ($save) {
-            return view('login');
-            return back()->with('Zarejestrowano pomyślnie.');
+            return redirect()->route('login');
+            //return back()->with('Zarejestrowano pomyślnie.');
         } else {
-            return back()->with('Rejestracja nie powiodła się.');
+            //return back()->with('Rejestracja nie powiodła się.');
         }
 
 

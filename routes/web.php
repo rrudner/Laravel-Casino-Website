@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'generateView'])->name('home');
 
-Route::get('/login', [LoginController::class, 'generateView']);
+Route::get('/login', [LoginController::class, 'generateView'])->name('login');
 
-Route::get('/register', [RegisterController::class, 'generateView']);
+Route::get('/register', [RegisterController::class, 'generateView'])->name('register');
 
 Route::get('/login/auth', [LoginController::class, 'auth'])->name('login.auth');
 
