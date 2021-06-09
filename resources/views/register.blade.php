@@ -29,6 +29,14 @@
             <button type="submit" class="pure-button pure-button-primary">Zarejestruj się</button>
         </fieldset>
     </form>
+
+    @if (count($errors) > 0)
+        <div>
+            Rejestracja nie powiodła się.
+        </div>
+    @endif
+
+
 @endsection
 
 </html>

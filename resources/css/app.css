@@ -31,3 +31,7 @@ a.pure-button-primary {
 .w3-animate-opacity{
     color: black;
 }
+
+.w3-display-topmiddle{
+    text-align: center;
+}

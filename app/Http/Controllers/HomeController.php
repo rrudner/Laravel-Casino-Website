@@ -7,12 +7,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-
-
-
     public function generateView()
     {
-        $user = User::where('iduser', '=', session('LoggedUser'))->first();
+        $user = User::where('id', '=', session('LoggedUser'))->first();
         return view('home', [
             'user' => $user
         ]);

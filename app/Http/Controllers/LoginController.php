@@ -20,19 +20,15 @@ class LoginController extends Controller
         ]);
 
         $userInfo = User::where('username', '=', $request->login)->first();
-
-        if (!$userInfo) {
-            dd('zle');
-            return back()->with('fail', 'Invalid username');
-        } else {
-            if ($userInfo->password == $request->password) {
-
-                $request->session()->put('LoggedUser', $userInfo->iduser);
-                return redirect('/');
+        try {
+            if (!$userInfo->password == $request->password) {
+                return back()->with('status', 'Niepoprawny login, lub hasło');
             } else {
-
-                return back()->with('fail', 'Invalid password');
+                $request->session()->put('LoggedUser', $userInfo->id);
+                return redirect('/');
             }
+        } catch (\Throwable $e) {
+            return back()->with('status', 'Niepoprawny login, lub hasło');
         }
     }
 }

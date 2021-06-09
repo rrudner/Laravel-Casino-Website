@@ -13,6 +13,9 @@
             <input type="password" id="password" name="password" placeholder="hasło" />
             <button type="submit" class="pure-button pure-button-primary">Zaloguj się</button>
         </fieldset>
+        Jeżeli nie posiadasz jeszcze konta:
+        <br>
+        <a href={{ 'register' }}>zarejstruj się. </a>
     </form>
 @endsection
 
