@@ -10,6 +10,7 @@ class LoginController extends Controller
 {
     public function generateView()
     {
+        Auth::logout();
         return view('login');
     }
 

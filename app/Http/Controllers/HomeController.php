@@ -17,9 +17,9 @@ class HomeController extends Controller
         ]);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        $request->session()->flush();
-        return redirect()->route('home');
+        Auth::logout();
+        return redirect()->route('login')->with('status', 'wylogowano pomyślnie');
     }
 }

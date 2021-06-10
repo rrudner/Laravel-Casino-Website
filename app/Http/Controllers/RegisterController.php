@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
@@ -13,6 +14,7 @@ class RegisterController extends Controller
 {
     public function generateView()
     {
+        Auth::logout();
         return view('register');
     }
 
