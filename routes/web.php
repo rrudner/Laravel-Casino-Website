@@ -23,8 +23,8 @@ Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 Route::get('/login', [LoginController::class, 'generateView'])->name('login');
 Route::get('/login/auth', [LoginController::class, 'auth'])->name('login.auth');
 
-Route::get('/register', [RegisterController::class, 'generateView'])->name('register')->middleware('roleUnallowed:all');
-Route::get('/register/save', [RegisterController::class, 'save'])->name('register.save')->middleware('roleUnallowed:all');
+Route::get('/register', [RegisterController::class, 'generateView'])->name('register');
+Route::get('/register/save', [RegisterController::class, 'save'])->name('register.save');
 
 Route::get('/payment', [PaymentController::class, 'generateView'])->name('payment')->middleware('roleAllowed:user');
 Route::get('/payment/deposit', [PaymentController::class, 'deposit'])->name('payment.deposit')->middleware('roleAllowed:user');
