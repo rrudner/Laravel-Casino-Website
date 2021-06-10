@@ -18,7 +18,7 @@
                 <a style="text-decoration:none" href={{ route('home') }}>{{ config('app.name') }}</a>
             </div>
 
-            @if (isset($user->username))
+            @if (isset($user))
 
                 <div class="w3-display-topright w3-padding">
                     {{ $user->name }}
@@ -28,7 +28,7 @@
 
                 <div class="w3-display-topmiddle w3-padding">
                     {{-- do zmiany bo to jest dramat --}}
-                    @if ($user->role == '2')
+                    @if ($role == 'admin')
                         {{-- koniec --}}
                         panel administratora
                     @else
@@ -45,8 +45,6 @@
                 </div>
 
             @endif
-
-
 
             <div class="w3-display-middle">
                 <div animated-content>

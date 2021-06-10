@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class RegisterController extends Controller
@@ -42,7 +43,7 @@ class RegisterController extends Controller
         $user = new User;
 
         $user->username = $request->login;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->city = $request->city;
@@ -55,8 +56,6 @@ class RegisterController extends Controller
         } catch (\Illuminate\Database\QueryException $ex) {
             return redirect()->route('register')->with('status', 'Użytkownik o takim loginie już istnieje.');
         }
-
-
 
         if ($save) {
             $user->created_by = $user->id;

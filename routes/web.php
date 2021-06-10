@@ -17,22 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'generateView'])->name('home');
-
-Route::get('/login', [LoginController::class, 'generateView'])->name('login');
-
-Route::get('/register', [RegisterController::class, 'generateView'])->name('register');
-
-Route::get('/payment', [PaymentController::class, 'generateView'])->name('payment');
-
-//
-
+Route::get('/', [HomeController::class, 'generateView'])->name('home')->middleware('roleUnallowed:null');
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 
-Route::get('/register/save', [RegisterController::class, 'save'])->name('register.save');
-
+Route::get('/login', [LoginController::class, 'generateView'])->name('login');
 Route::get('/login/auth', [LoginController::class, 'auth'])->name('login.auth');
 
-Route::get('/payment/deposit', [PaymentController::class, 'deposit'])->name('payment.deposit');
+Route::get('/register', [RegisterController::class, 'generateView'])->name('register')->middleware('roleUnallowed:all');
+Route::get('/register/save', [RegisterController::class, 'save'])->name('register.save')->middleware('roleUnallowed:all');
 
-Route::get('/payment/withdraw', [PaymentController::class, 'withdraw'])->name('payment.withdraw');
+Route::get('/payment', [PaymentController::class, 'generateView'])->name('payment')->middleware('roleAllowed:user');
+Route::get('/payment/deposit', [PaymentController::class, 'deposit'])->name('payment.deposit')->middleware('roleAllowed:user');
+Route::get('/payment/withdraw', [PaymentController::class, 'withdraw'])->name('payment.withdraw')->middleware('roleAllowed:user');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -14,21 +15,16 @@ class LoginController extends Controller
 
     public function auth(Request $request)
     {
-        $request->validate([
-            'login' => 'required',
+        $credentials = $request->validate([
+            'username' => 'required',
             'password' => 'required'
         ]);
 
-        $userInfo = User::where('username', '=', $request->login)->first();
-        try {
-            if (!$userInfo->password == $request->password) {
-                return back()->with('status', 'Niepoprawny login, lub hasło');
-            } else {
-                $request->session()->put('LoggedUser', $userInfo->id);
-                return redirect('/');
-            }
-        } catch (\Throwable $e) {
-            return back()->with('status', 'Niepoprawny login, lub hasło');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('home');
         }
+        return back()->with('status', 'Niepoprawny login lub hasło.');
     }
 }
