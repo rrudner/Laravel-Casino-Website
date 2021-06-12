@@ -23,7 +23,7 @@
                 <div class="w3-display-topright w3-padding">
                     {{ $user->name }}
                     {{ $user->surname }}
-                    <a href={{ 'logout' }} class="pure-button pure-button-primary">Wyloguj się</a>
+                    <a href={{  route('logout') }} class="pure-button pure-button-primary">Wyloguj się</a>
                 </div>
 
                 <div class="w3-display-topmiddle w3-padding">
@@ -38,8 +38,8 @@
             @else
 
                 <div class="w3-display-topright w3-padding">
-                    <a href={{ 'login' }} class="pure-button pure-button-primary">zaloguj się</a>
-                    <a href={{ 'register' }} class="pure-button pure-button-primary">zarejestruj się</a>
+                    <a href={{  route('login') }} class="pure-button pure-button-primary">zaloguj się</a>
+                    <a href={{  route('register') }} class="pure-button pure-button-primary">zarejestruj się</a>
                 </div>
 
             @endif

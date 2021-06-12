@@ -35,12 +35,12 @@ class Controller extends BaseController
                 'deleted_by',
             ]);
 
-        foreach ($amounts as $amount => $columns) {
-            if ($columns->withdraw == 0 && $columns->deleted_by == null) {
-                $updatedWallet += $columns->amount;
+        foreach ($amounts as $amount => $column) {
+            if ($column->withdraw == 0 && $column->deleted_by == null) {
+                $updatedWallet += $column->amount;
             }
-            if ($columns->withdraw == 1 && $columns->deleted_by == null) {
-                $updatedWallet -= $columns->amount;
+            if ($column->withdraw == 1 && $column->deleted_by == null) {
+                $updatedWallet -= $column->amount;
             }
         }
 

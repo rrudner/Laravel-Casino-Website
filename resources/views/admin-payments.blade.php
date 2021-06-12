@@ -4,7 +4,7 @@
 
 
 @section('animated-content')
-    <h1>Panel Administratora</h1>
+    <h1>Wpłaty/Wypłaty</h1>
     <br>
 
 
@@ -28,7 +28,7 @@
                 @foreach ($payments as $payment)
                     <tr class="my-tr">
                         <th class="my-th" scope="row">{{ $payment->id }}</th>
-                        <td class="my-td">{{ $payment->user_id }}</td>
+                        <td class="my-td">{{ $payment->username }}</td>
                         <td class="my-td">{{ $payment->amount }}</td>
                         <td class="my-td">{{ $payment->withdraw }}</td>
                         <td class="my-td">{{ $payment->created_at }}</td>
