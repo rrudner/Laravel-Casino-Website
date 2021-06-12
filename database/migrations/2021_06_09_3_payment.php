@@ -26,6 +26,15 @@ class Payment extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('amount');
             $table->boolean('withdraw');
+
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users');
+
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');
+
+            $table->unsignedBigInteger('deleted_by')->nullable();
+            $table->foreign('deleted_by')->references('id')->on('users');
         });
     }
 

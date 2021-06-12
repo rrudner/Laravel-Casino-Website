@@ -11,6 +11,7 @@ class HomeController extends Controller
 
     public function generateView()
     {
+        $this->checkWallet();
         return view('home', [
             'user' => Auth::user(),
             'role' => $this->checkRole(Auth::user()->role)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ class PaymentController extends Controller
 
     public function generateView()
     {
+        $this->checkWallet();
         return view('payment', [
             'user' => Auth::user(),
             'role' => $this->checkRole(Auth::user()->role)
@@ -21,21 +23,40 @@ class PaymentController extends Controller
     public function deposit(Request $request)
     {
         $this->user = Auth::user();
-        $this->user->wallet = $this->user->wallet + $request->amount;
-        $save = $this->user->save();
+
+        $payment = new Payment();
+        $payment->user_id = $this->user->id;
+        $payment->amount = $request->amount;
+        $payment->withdraw = 0;
+        $save = $payment->save();
 
         if ($save) {
-            return back()->with('status', 'wpłata została zrealizowana pomyślnie');
+            $payment->created_by = $this->user->id;
+            $payment->updated_by = $this->user->id;
+            $payment->save();
+            return back()->with('status', 'Płatność została zrealizowana pomyślnie');
+        } else {
+            return back()->with('status', 'Płatność nie została zrealizowana');
         }
     }
 
     public function withdraw()
     {
         $this->user = Auth::user();
-        $this->user->wallet = 0;
-        $save = $this->user->save();
+
+        $payment = new Payment();
+        $payment->user_id = $this->user->id;
+        $payment->amount = $this->user->wallet;
+        $payment->withdraw = 1;
+        $save = $payment->save();
+
         if ($save) {
-            return back()->with('status', 'wypłata została wykonana pomyślnie');
+            $payment->created_by = $this->user->id;
+            $payment->updated_by = $this->user->id;
+            $payment->save();
+            return back()->with('status', 'Wypłata została zrealizowana pomyślnie');
+        } else {
+            return back()->with('status', 'Wypłata nie została zrealizowana');
         }
     }
 }
