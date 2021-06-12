@@ -13,8 +13,8 @@ class HomeController extends Controller
     {
         $this->checkWallet();
         return view('home', [
-            'user' => Auth::user(),
-            'role' => $this->checkRole(Auth::user()->role)
+            'loggedUser' => Auth::user(),
+            'loggedRole' => $this->checkRole(Auth::user()->role)
         ]);
     }
 

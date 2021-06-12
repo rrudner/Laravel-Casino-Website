@@ -21,7 +21,7 @@
                 <th class="my-th" scope="col">Data aktualizacji</th>
                 <th class="my-th" scope="col">Zaktualizowana przez</th>
                 <th class="my-th" scope="col">Usunięta przez</th>
-                <th class="my-th" scope="col">Usuń</th>
+                <th class="my-th" scope="col">Usuń/Przywróć</th>
               </tr>
             </thead>
             <tbody>
@@ -36,7 +36,12 @@
                         <td class="my-td">{{ $payment->updated_at }}</td>
                         <td class="my-td">{{ $payment->updated_by }}</td>
                         <td class="my-td">{{ $payment->deleted_by }}</td>
-                        <td class="my-td">USUŃ</td>
+                        <td class="my-td">
+                            <div style="text-align:center"> 
+                            <a href={{ route('adminPaymentsDelete', $payment->id) }} class="pure-button pure-button-primary">ZMIEŃ</a>
+                            </div>
+
+                        </td>
                     </tr>
                 @endforeach
                 

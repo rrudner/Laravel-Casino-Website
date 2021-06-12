@@ -14,30 +14,48 @@ class AdminController extends Controller
     public function generateView()
     {
         return view('admin', [
-            'user' => Auth::user(),
-            'role' => $this->checkRole(Auth::user()->role),
+            'loggedUser' => Auth::user(),
+            'loggedRole' => $this->checkRole(Auth::user()->role),
         ]);
     }
     public function generateViewPayments()
     {
-        $this->hmm();
         return view('admin-payments', [
-            'user' => Auth::user(),
-            'role' => $this->checkRole(Auth::user()->role),
+            'loggedUser' => Auth::user(),
+            'loggedRole' => $this->checkRole(Auth::user()->role),
             'payments' => DB::table('payments')
                 ->leftJoin('users', 'payments.user_id', 'users.id')
                 ->select('payments.*', 'users.username',)
                 ->paginate(10),
         ]);
     }
-    public function hmm()
+    public function deletePayment($paymentId)
     {
-        $data = DB::table('payments')
-            ->leftJoin('users', 'payments.user_id', 'users.id')
-            ->select('payments.*', 'users.username',)
-            ->get();
-        echo "<pre>";
-        print_r($data);
-        dd();
+        $payment = Payment::find($paymentId);
+        $this->user = Auth::user();
+        if ($payment->deleted_by == null) {
+            $payment->updated_by = $this->user->id;
+            $payment->deleted_by = $this->user->id;
+            $save = $payment->save();
+            if ($save)
+                return back()->with('status', 'Usunięto płatność');
+        } else {
+            $payment->updated_by = $this->user->id;
+            $payment->deleted_by = null;
+            $save = $payment->save();
+            if ($save)
+                return back()->with('status', 'Przywrócono płatność');
+        }
+    }
+
+
+    public function generateViewUsers()
+    {
+        return view('admin-users', [
+            'loggedUser' => Auth::user(),
+            'loggedRole' => $this->checkRole(Auth::user()->role),
+            'users' => DB::table('users')
+                ->paginate(10),
+        ]);
     }
 }

@@ -8,5 +8,6 @@
     <br>
 
     <a href={{ route('adminPayments') }} class="pure-button pure-button-primary">Wpłaty</a>
+    <a href={{ route('adminUsers') }} class="pure-button pure-button-primary">Użytkownicy</a>
 
 @endsection
