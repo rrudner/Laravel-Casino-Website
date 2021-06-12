@@ -15,7 +15,7 @@
         </fieldset>
         Jeżeli nie posiadasz jeszcze konta:
         <br>
-        <a href={{ 'register' }}>zarejstruj się. </a>
+        <a href={{ route('register') }}>zarejstruj się. </a>
     </form>
 @endsection
 

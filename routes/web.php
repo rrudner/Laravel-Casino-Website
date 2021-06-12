@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -29,3 +30,6 @@ Route::get('/register/save', [RegisterController::class, 'save'])->name('registe
 Route::get('/payment', [PaymentController::class, 'generateView'])->name('payment')->middleware('roleAllowed:user');
 Route::get('/payment/deposit', [PaymentController::class, 'deposit'])->name('payment.deposit')->middleware('roleAllowed:user');
 Route::get('/payment/withdraw', [PaymentController::class, 'withdraw'])->name('payment.withdraw')->middleware('roleAllowed:user');
+
+Route::get('/admin', [AdminController::class, 'generateView'])->name('admin')->middleware('roleAllowed:admin');
+Route::get('/admin/payments', [AdminController::class, 'generateViewPayments'])->name('adminPayments')->middleware('roleAllowed:admin');

@@ -27,10 +27,8 @@
                 </div>
 
                 <div class="w3-display-topmiddle w3-padding">
-                    {{-- do zmiany bo to jest dramat --}}
                     @if ($role == 'admin')
-                        {{-- koniec --}}
-                        panel administratora
+                    <a href={{ route('admin') }} class="pure-button pure-button-primary">Panel Administratora</a>
                     @else
                         <a style="text-decoration:none" href={{ route('payment') }}>Twój stan konta:
                             {{ $user->wallet }}</a>

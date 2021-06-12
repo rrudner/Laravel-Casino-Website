@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Strona Główna')
+@section('title', 'Płatności')
 
 
 @section('animated-content')

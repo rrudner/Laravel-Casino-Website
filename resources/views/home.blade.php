@@ -19,10 +19,10 @@
             {{ $role }}
         </h1>
         <br>
-        <a href={{ 'logout' }} class="pure-button pure-button-primary">Wyloguj się</a>
+        <a href={{ route('logout') }} class="pure-button pure-button-primary">Wyloguj się</a>
     @else
-        <a href={{ 'login' }} class="pure-button pure-button-primary">zaloguj się</a>
-        <a href={{ 'register' }} class="pure-button pure-button-primary">zarejestruj się</a>
+        <a href={{ route('login') }} class="pure-button pure-button-primary">zaloguj się</a>
+        <a href={{ route('register') }} class="pure-button pure-button-primary">zarejestruj się</a>
     @endif
 
 
