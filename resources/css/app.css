@@ -42,15 +42,17 @@ a.pure-button-primary {
     color: white;
 }
   
-.my-td, .my-th {
+.my-table td, .my-table th {
     border: 1px solid #ffffff50;
-    text-align: left;
+    text-align: center;
     padding: 8px;
 }
   
-.my-tr:nth-child(even) {
+.my-table tr:nth-child(even) {
     background-color: #61616150;
+    text-align: center;
 }
-.my-tr:nth-child(odd) {
+.my-table tr:nth-child(odd) {
     background-color: #1a1a1a50;
+    text-align: center;
 }

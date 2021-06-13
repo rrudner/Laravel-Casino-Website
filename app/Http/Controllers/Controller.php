@@ -32,14 +32,14 @@ class Controller extends BaseController
             ->get([
                 'amount',
                 'withdraw',
-                'deleted_by',
+                'deleted_at',
             ]);
 
         foreach ($amounts as $amount => $column) {
-            if ($column->withdraw == 0 && $column->deleted_by == null) {
+            if ($column->withdraw == 0 && $column->deleted_at == null) {
                 $updatedWallet += $column->amount;
             }
-            if ($column->withdraw == 1 && $column->deleted_by == null) {
+            if ($column->withdraw == 1 && $column->deleted_at == null) {
                 $updatedWallet -= $column->amount;
             }
         }

@@ -11,37 +11,45 @@
     <div>
         <table class="my-table">
             <thead>
-              <tr class="my-tr">
-                <th class="my-th" scope="col">id</th>
-                <th class="my-th" scope="col">Użytkownik</th>
-                <th class="my-th" scope="col">Kwota</th>
-                <th class="my-th" scope="col">Wpłata/Wypłata</th>
-                <th class="my-th" scope="col">Data utworzenia</th>
-                <th class="my-th" scope="col">Stworzona przez</th>
-                <th class="my-th" scope="col">Data aktualizacji</th>
-                <th class="my-th" scope="col">Zaktualizowana przez</th>
-                <th class="my-th" scope="col">Usunięta przez</th>
-                <th class="my-th" scope="col">Usuń/Przywróć</th>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Użytkownik</th>
+                <th scope="col">Kwota</th>
+                <th scope="col">Wpłata/Wypłata</th>
+                <th scope="col">Data utworzenia:</th>
+                <th scope="col">Stworzona przez</th>
+                <th scope="col">Data aktualizacji:</th>
+                <th scope="col">Zaktualizowana przez</th>
+                <th scope="col">Data usunięcia</th>
+                <th scope="col">Usuń/Przywróć</th>
               </tr>
             </thead>
             <tbody>
                 @foreach ($payments as $payment)
-                    <tr class="my-tr">
-                        <th class="my-th" scope="row">{{ $payment->id }}</th>
-                        <td class="my-td">{{ $payment->username }}</td>
-                        <td class="my-td">{{ $payment->amount }}</td>
-                        <td class="my-td">{{ $payment->withdraw }}</td>
-                        <td class="my-td">{{ $payment->created_at }}</td>
-                        <td class="my-td">{{ $payment->created_by }}</td>
-                        <td class="my-td">{{ $payment->updated_at }}</td>
-                        <td class="my-td">{{ $payment->updated_by }}</td>
-                        <td class="my-td">{{ $payment->deleted_by }}</td>
-                        <td class="my-td">
-                            <div style="text-align:center"> 
-                            <a href={{ route('adminPaymentsDelete', $payment->id) }} class="pure-button pure-button-primary">ZMIEŃ</a>
-                            </div>
-
+                    <tr>
+                        <th scope="row">{{ $payment->id }}</th>
+                        <td>{{ $payment->user_id }}</td>
+                        <td>{{ $payment->amount }}</td>
+                        <td>
+                            @if($payment->withdraw)
+                            💸WYPŁATA💸
+                            @else
+                            💰WPŁATA💰
+                            @endif
                         </td>
+                        <td>{{ $payment->created_at }}</td>
+                        <td>{{ $payment->created_by }}</td>
+                        <td>{{ $payment->updated_at }}</td>
+                        <td>{{ $payment->updated_by }}</td>
+                        
+                            @if ($payment->deleted_at)
+                            <td>{{$payment->deleted_at}}</td>
+                            <td><a href={{ route('adminPaymentsDelete', $payment->id) }} class="pure-button pure-button-primary">♻️</a></td>
+                            
+                            @else
+                            <td>✅</td>
+                            <td><a href={{ route('adminPaymentsDelete', $payment->id) }} class="pure-button pure-button-primary">🗑️</a></td>
+                            @endif
                     </tr>
                 @endforeach
                 

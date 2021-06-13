@@ -34,4 +34,8 @@ Route::get('/payment/withdraw', [PaymentController::class, 'withdraw'])->name('p
 Route::get('/admin', [AdminController::class, 'generateView'])->name('admin')->middleware('roleAllowed:admin');
 Route::get('/admin/payments', [AdminController::class, 'generateViewPayments'])->name('adminPayments')->middleware('roleAllowed:admin');
 Route::get('/admin/payments/delete{paymentId}', [AdminController::class, 'deletePayment'])->name('adminPaymentsDelete')->middleware('roleAllowed:admin');
+
 Route::get('/admin/users', [AdminController::class, 'generateViewUsers'])->name('adminUsers')->middleware('roleAllowed:admin');
+Route::get('/admin/users/delete{userId}', [AdminController::class, 'deleteUser'])->name('adminUsersDelete')->middleware('roleAllowed:admin');
+Route::get('/admin/users/edit{userId}', [AdminController::class, 'generateViewEditUser'])->name('adminUsersEdit')->middleware('roleAllowed:admin');
+Route::get('/admin/users/edit/save', [AdminController::class, 'editUser'])->name('adminUsersEdit.save')->middleware('roleAllowed:admin');

@@ -19,6 +19,7 @@ class Payment extends Migration
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
+            $table->softDeletes();
         });
 
         Schema::table('payments', function (Blueprint $table) {
@@ -32,9 +33,6 @@ class Payment extends Migration
 
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('updated_by')->references('id')->on('users');
-
-            $table->unsignedBigInteger('deleted_by')->nullable();
-            $table->foreign('deleted_by')->references('id')->on('users');
         });
     }
 
