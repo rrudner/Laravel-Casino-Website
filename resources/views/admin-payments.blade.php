@@ -52,7 +52,6 @@
                             @endif
                     </tr>
                 @endforeach
-                
             </tbody>
         </table>
     </div>
