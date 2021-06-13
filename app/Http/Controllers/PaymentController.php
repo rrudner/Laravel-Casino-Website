@@ -43,20 +43,23 @@ class PaymentController extends Controller
     public function withdraw()
     {
         $this->user = Auth::user();
+        if (!($this->user->wallet <= 0)) {
+            $payment = new Payment();
+            $payment->user_id = $this->user->id;
+            $payment->amount = $this->user->wallet;
+            $payment->withdraw = 1;
+            $save = $payment->save();
 
-        $payment = new Payment();
-        $payment->user_id = $this->user->id;
-        $payment->amount = $this->user->wallet;
-        $payment->withdraw = 1;
-        $save = $payment->save();
-
-        if ($save) {
-            $payment->created_by = $this->user->id;
-            $payment->updated_by = $this->user->id;
-            $payment->save();
-            return back()->with('status', 'Wypłata została zrealizowana pomyślnie');
+            if ($save) {
+                $payment->created_by = $this->user->id;
+                $payment->updated_by = $this->user->id;
+                $payment->save();
+                return back()->with('status', 'Wypłata została zrealizowana pomyślnie');
+            } else {
+                return back()->with('status', 'Wypłata nie została zrealizowana');
+            }
         } else {
-            return back()->with('status', 'Wypłata nie została zrealizowana');
+            return back()->with('status', 'Brak środków na koncie.');
         }
     }
 }
