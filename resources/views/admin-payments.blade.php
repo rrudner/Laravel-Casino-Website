@@ -8,21 +8,21 @@
     <br>
 
 
-    <div>
+    <div style="overflow-x:auto;">
         <table class="my-table">
             <thead>
-              <tr>
-                <th scope="col">id</th>
-                <th scope="col">Użytkownik</th>
-                <th scope="col">Kwota</th>
-                <th scope="col">Wpłata/Wypłata</th>
-                <th scope="col">Data utworzenia:</th>
-                <th scope="col">Stworzona przez</th>
-                <th scope="col">Data aktualizacji:</th>
-                <th scope="col">Zaktualizowana przez</th>
-                <th scope="col">Data usunięcia</th>
-                <th scope="col">Usuń/Przywróć</th>
-              </tr>
+                <tr>
+                    <th>id</th>
+                    <th>Użytkownik</th>
+                    <th>Kwota</th>
+                    <th>Wpłata/Wypłata</th>
+                    <th>Data utworzenia:</th>
+                    <th>Stworzona przez</th>
+                    <th>Data aktualizacji:</th>
+                    <th>Zaktualizowana przez</th>
+                    <th>Data usunięcia</th>
+                    <th>Usuń/Przywróć</th>
+                </tr>
             </thead>
             <tbody>
                 @foreach ($payments as $payment)
@@ -31,30 +31,32 @@
                         <td>{{ $payment->user_id }}</td>
                         <td>{{ $payment->amount }}</td>
                         <td>
-                            @if($payment->withdraw)
-                            💸WYPŁATA💸
+                            @if ($payment->withdraw)
+                                💸WYPŁATA💸
                             @else
-                            💰WPŁATA💰
+                                💰WPŁATA💰
                             @endif
                         </td>
                         <td>{{ $payment->created_at }}</td>
                         <td>{{ $payment->created_by }}</td>
                         <td>{{ $payment->updated_at }}</td>
                         <td>{{ $payment->updated_by }}</td>
-                        
-                            @if ($payment->deleted_at)
-                            <td>{{$payment->deleted_at}}</td>
-                            <td><a href={{ route('adminPaymentsDelete', $payment->id) }} class="pure-button pure-button-primary">♻️</a></td>
-                            
-                            @else
+
+                        @if ($payment->deleted_at)
+                            <td>{{ $payment->deleted_at }}</td>
+                            <td><a href={{ route('adminPaymentsDelete', $payment->id) }}
+                                    class="pure-button pure-button-primary">♻️</a></td>
+
+                        @else
                             <td>✅</td>
-                            <td><a href={{ route('adminPaymentsDelete', $payment->id) }} class="pure-button pure-button-primary">🗑️</a></td>
-                            @endif
+                            <td><a href={{ route('adminPaymentsDelete', $payment->id) }}
+                                    class="pure-button pure-button-primary">🗑️</a></td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-    {{ $payments->onEachSide(10)->links() }}
+    {{ $payments->links() }}
 
 @endsection

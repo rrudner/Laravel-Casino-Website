@@ -9,6 +9,8 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -21,14 +23,14 @@ class RegisterController extends Controller
     public function save(Request $request)
     {
         $request->validate([
-            'login' => 'required',
-            'password' => 'required',
+            'login' => 'required|min:3|max:13',
+            'password' => 'required|min:3|max:28',
 
-            'name' => 'required',
-            'surname' => 'required',
+            'name' => 'required|min:3|max:13',
+            'surname' => 'required|min:3|max:28',
 
-            'city' => 'required',
-            'street' => 'required'
+            'city' => 'required|min:3|max:30',
+            'street' => 'required|min:3|max:30'
         ]);
 
         if (!($role = Role::where('name', '=', 'user')->first())) {
@@ -56,7 +58,7 @@ class RegisterController extends Controller
         try {
             $save = $user->save();
         } catch (\Illuminate\Database\QueryException $ex) {
-            return redirect()->route('register')->with('status', 'Użytkownik o takim loginie już istnieje.');
+            return redirect()->route('register')->with('status', 'Użytkownik o takim loginie już istnieje. <br> Jeśli nie możesz się zalogować, twoje konto zostało zablokowane. <br> Skontaktuj się z administratorem.');
         }
 
         if ($save) {

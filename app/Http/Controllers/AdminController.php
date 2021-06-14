@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\User;
 use App\Models\Payment;
 use App\Models\Role;
@@ -19,6 +20,7 @@ class AdminController extends Controller
             'loggedRole' => $this->checkRole(Auth::user()->role),
         ]);
     }
+
     public function generateViewPayments()
     {
         return view('admin-payments', [
@@ -32,6 +34,50 @@ class AdminController extends Controller
                 ->paginate(10)
         ]);
     }
+
+    public function generateViewUsers()
+    {
+        return view('admin-users', [
+            'loggedUser' => Auth::user(),
+            'loggedRole' => $this->checkRole(Auth::user()->role),
+            'users' => DB::table('users')
+                ->leftJoin('roles', 'roles.id', 'users.role')
+                ->leftJoin('users as u1', 'u1.id', 'users.created_by')
+                ->leftJoin('users as u2', 'u2.id', 'users.updated_by')
+                ->select('users.*', 'roles.name as role', 'u1.username as created_by', 'u2.username as updated_by')
+                ->paginate(10),
+        ]);
+    }
+
+    public function generateViewGames()
+    {
+        return view('admin-games', [
+            'loggedUser' => Auth::user(),
+            'loggedRole' => $this->checkRole(Auth::user()->role),
+            'games' => DB::table('games')
+                ->leftJoin('users as u1', 'u1.id', 'games.user_id')
+                ->leftJoin('users as u2', 'u2.id', 'games.updated_by')
+                ->select('games.*', 'u1.username as user_id', 'u2.username as updated_by')
+                ->paginate(10)
+        ]);
+    }
+
+    public function generateViewRoles()
+    {
+        return view('admin-roles', [
+            'loggedUser' => Auth::user(),
+            'loggedRole' => $this->checkRole(Auth::user()->role),
+            'roles' => DB::table('roles')
+                ->paginate(10)
+        ]);
+    }
+
+
+
+
+
+
+
 
     public function deletePayment($paymentId)
     {
@@ -71,20 +117,60 @@ class AdminController extends Controller
         }
     }
 
-
-    public function generateViewUsers()
+    public function deleteGame($gameId)
     {
-        return view('admin-users', [
-            'loggedUser' => Auth::user(),
-            'loggedRole' => $this->checkRole(Auth::user()->role),
-            'users' => DB::table('users')
-                ->leftJoin('roles', 'roles.id', 'users.role')
-                ->leftJoin('users as u1', 'u1.id', 'users.created_by')
-                ->leftJoin('users as u2', 'u2.id', 'users.updated_by')
-                ->select('users.*', 'roles.name as role', 'u1.username as created_by', 'u2.username as updated_by')
-                ->paginate(10),
-        ]);
+        $this->user = Auth::user();
+        if (Game::find($gameId)) {
+            $game = Game::where('id', '=', $gameId)->first();
+            $game->updated_by = $this->user->id;
+            $game->save();
+            Game::withoutTrashed()->find($gameId)->delete();
+            return back()->with('status', 'Gra została usunięta.');
+        } else {
+            Game::withTrashed()->find($gameId)->restore();
+            $game = Game::where('id', '=', $gameId)->first();
+            $game->updated_by = $this->user->id;
+            $game->save();
+            return back()->with('status', 'Gra została przywrócona.');
+        }
     }
+
+    public function deleteRole($roleId)
+    {
+        $this->user = Auth::user();
+        if (Role::find($roleId)) {
+            $role = Role::where('id', '=', $roleId)->first();
+
+            if ($role->name == 'user' || $role->name == 'admin') {
+                return back()->with('status', 'Nie możesz usunąć tej roli.');
+            }
+
+            // $users = DB::table('users')
+            //     ->where('role', '=', $roleId);
+
+            // foreach ($users as $user => $column) {
+            //     $column->role = '2';
+            // }
+
+
+
+            $role->save();
+            Role::withoutTrashed()->find($roleId)->delete();
+            return back()->with('status', 'Gra została usunięta.');
+        } else {
+            Role::withTrashed()->find($roleId)->restore();
+            $role = Role::where('id', '=', $roleId)->first();
+            $role->updated_by = $this->user->id;
+            $role->save();
+            return back()->with('status', 'Gra została przywrócona.');
+        }
+    }
+
+
+
+
+
+
 
     public function generateViewEditUser($userId)
     {

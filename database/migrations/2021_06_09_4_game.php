@@ -29,6 +29,8 @@ class Game extends Migration
             $table->boolean('win');
             $table->integer('wallet_before');
             $table->integer('wallet_after');
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

@@ -7,28 +7,28 @@
     <h1>Użytkownicy</h1>
     <br>
 
-    <div>
+    <div style="overflow-x:auto;">
         <table class="my-table">
             <thead>
-              <tr>
-                <th scope="col">id</th>
-                <th scope="col">Login</th>
-                <th scope="col">Hasło</th>
-                <th scope="col">Imię</th>
-                <th scope="col">Nazwisko</th>
-                <th scope="col">Miasto</th>
-                <th scope="col">Ulica</th>
-                <th scope="col">Portfel</th>
-                <th scope="col">Wynik</th>
-                <th scope="col">Rola</th>
-                <th scope="col">Stworzony przez</th>
-                <th scope="col">Data stworzenia:</th>
-                <th scope="col">Zmodyfikowany przez</th>
-                <th scope="col">Data modyfikacji:</th>
-                <th scope="col">Data usunięcia:</th>
-                <th scope="col">Usuń</th>
-                <th scope="col">Edytuj</th>
-              </tr>
+                <tr>
+                    <th>id</th>
+                    <th>Login</th>
+                    <th>Hasło</th>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Miasto</th>
+                    <th>Ulica</th>
+                    <th>Portfel</th>
+                    <th>Wynik</th>
+                    <th>Rola</th>
+                    <th>Stworzony przez</th>
+                    <th>Data stworzenia:</th>
+                    <th>Zmodyfikowany przez</th>
+                    <th>Data modyfikacji:</th>
+                    <th>Data usunięcia:</th>
+                    <th>Usuń</th>
+                    <th>Edytuj</th>
+                </tr>
             </thead>
             <tbody>
                 @foreach ($users as $user)
@@ -48,20 +48,23 @@
                         <td>{{ $user->updated_by }}</td>
                         <td>{{ $user->updated_at }}</td>
                         @if ($user->deleted_at)
-                            <td>{{$user->deleted_at}}</td>
-                            <td><a href={{ route('adminUsersDelete', $user->id) }} class="pure-button pure-button-primary">♻️</a></td>
-                            
-                            @else
+                            <td>{{ $user->deleted_at }}</td>
+                            <td><a href={{ route('adminUsersDelete', $user->id) }}
+                                    class="pure-button pure-button-primary">♻️</a></td>
+
+                        @else
                             <td>✅</td>
-                            <td><a href={{ route('adminUsersDelete', $user->id) }} class="pure-button pure-button-primary">🗑️</a></td>
-                            @endif
-                        
+                            <td><a href={{ route('adminUsersDelete', $user->id) }}
+                                    class="pure-button pure-button-primary">🗑️</a></td>
+                        @endif
+
                         <td>
-                            <a href={{ route('adminUsersEdit', $user->id) }} class="pure-button pure-button-primary">✨</a>
+                            <a href={{ route('adminUsersEdit', $user->id) }}
+                                class="pure-button pure-button-primary">✨</a>
                         </td>
                     </tr>
                 @endforeach
-                
+
             </tbody>
         </table>
     </div>

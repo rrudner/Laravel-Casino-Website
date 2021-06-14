@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -18,8 +20,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'generateView'])->name('home')->middleware('roleUnallowed:null');
-Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
+//Route::get('/', [HomeController::class, 'generateView'])->name('home')->middleware('roleUnallowed:null');
+Route::get('/', [GameController::class, 'generateView'])->name('home')->middleware('roleUnallowed:null');
+Route::get('/win{amount}', [GameController::class, 'gameWin'])->name('gameWin')->middleware('roleAllowed:user');
+Route::get('/lose{amount}', [GameController::class, 'gameLose'])->name('gameLose')->middleware('roleAllowed:user');
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout')->middleware('roleUnallowed:null');
+
+Route::get('/account', [AccountController::class, 'generateView'])->name('account')->middleware('roleUnallowed:null');
+Route::get('/account/save', [AccountController::class, 'editAccount'])->name('account.save')->middleware('roleUnallowed:null');
+
 
 Route::get('/login', [LoginController::class, 'generateView'])->name('login');
 Route::get('/login/auth', [LoginController::class, 'auth'])->name('login.auth');
@@ -32,6 +41,7 @@ Route::get('/payment/deposit', [PaymentController::class, 'deposit'])->name('pay
 Route::get('/payment/withdraw', [PaymentController::class, 'withdraw'])->name('payment.withdraw')->middleware('roleAllowed:user');
 
 Route::get('/admin', [AdminController::class, 'generateView'])->name('admin')->middleware('roleAllowed:admin');
+
 Route::get('/admin/payments', [AdminController::class, 'generateViewPayments'])->name('adminPayments')->middleware('roleAllowed:admin');
 Route::get('/admin/payments/delete{paymentId}', [AdminController::class, 'deletePayment'])->name('adminPaymentsDelete')->middleware('roleAllowed:admin');
 
@@ -39,3 +49,9 @@ Route::get('/admin/users', [AdminController::class, 'generateViewUsers'])->name(
 Route::get('/admin/users/delete{userId}', [AdminController::class, 'deleteUser'])->name('adminUsersDelete')->middleware('roleAllowed:admin');
 Route::get('/admin/users/edit{userId}', [AdminController::class, 'generateViewEditUser'])->name('adminUsersEdit')->middleware('roleAllowed:admin');
 Route::get('/admin/users/edit/save', [AdminController::class, 'editUser'])->name('adminUsersEdit.save')->middleware('roleAllowed:admin');
+
+Route::get('/admin/games', [AdminController::class, 'generateViewGames'])->name('adminGames')->middleware('roleAllowed:admin');
+Route::get('/admin/games/delete{userId}', [AdminController::class, 'deleteGame'])->name('adminGamesDelete')->middleware('roleAllowed:admin');
+
+Route::get('/admin/roles', [AdminController::class, 'generateViewRoles'])->name('adminRoles')->middleware('roleAllowed:admin');
+Route::get('/admin/roles/delete{roleId}', [AdminController::class, 'deleteRole'])->name('adminRolesDelete')->middleware('roleAllowed:admin');

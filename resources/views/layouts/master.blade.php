@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="{{ config('app.url') }}/resources/css/app.css">
+    @yield('coingame')
 </head>
 
 <body>
@@ -21,14 +22,15 @@
             @if (isset($loggedUser))
 
                 <div class="w3-display-topright w3-padding">
-                    {{ $loggedUser->name }}
-                    {{ $loggedUser->surname }}
-                    <a href={{  route('logout') }} class="pure-button pure-button-primary">Wyloguj się</a>
+                    <a style="text-decoration:none" href={{ route('account') }}>{{ $loggedUser->name }}
+                        {{ $loggedUser->surname }}</a>
+
+                    <a href={{ route('logout') }} class="pure-button pure-button-primary">Wyloguj się</a>
                 </div>
 
                 <div class="w3-display-topmiddle w3-padding">
                     @if ($loggedRole == 'admin')
-                    <a href={{ route('admin') }} class="pure-button pure-button-primary">Panel Administratora</a>
+                        <a href={{ route('admin') }} class="pure-button pure-button-primary">Panel Administratora</a>
                     @else
                         <a style="text-decoration:none" href={{ route('payment') }}>Twój stan konta:
                             {{ $loggedUser->wallet }}</a>
@@ -38,8 +40,8 @@
             @else
 
                 <div class="w3-display-topright w3-padding">
-                    <a href={{  route('login') }} class="pure-button pure-button-primary">zaloguj się</a>
-                    <a href={{  route('register') }} class="pure-button pure-button-primary">zarejestruj się</a>
+                    <a href={{ route('login') }} class="pure-button pure-button-primary">zaloguj się</a>
+                    <a href={{ route('register') }} class="pure-button pure-button-primary">zarejestruj się</a>
                 </div>
 
             @endif
@@ -55,7 +57,7 @@
                 </div>
                 @if (session('status'))
                     <div class="alert alert-success">
-                        {{ session('status') }}
+                        {!! session('status') !!}
                     </div>
                 @endif
             </div>
@@ -63,6 +65,11 @@
             <div class="w3-display-bottomleft w3-padding-large">
                 Powered by <a href="https://bieda.it" target="_blank">bieda.it</a>
             </div>
+
+            <div class="w3-display-bottomright w3-padding-large">
+                Kontakt: <a href="mailto:radek.rud112@gmail.com">radek.rud112@gmail.com</a>
+            </div>
+
         </div>
     </div>
 

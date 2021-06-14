@@ -44,8 +44,36 @@ class Controller extends BaseController
             }
         }
 
-        $this->user->wallet = $updatedWallet;
-        $save = $this->user->save();
-        return ($save);
+        $this->user->wallet = $updatedWallet + $this->checkResult();
+        $this->user->save();
+    }
+
+
+    public function checkResult()
+    {
+        $this->user = Auth::user();
+        $updatedResult = 0;
+
+        $games = DB::table('games')
+            ->where([
+                ['user_id', '=', $this->user->id],
+            ])
+            ->get([
+                'bet',
+                'win',
+                'deleted_at',
+            ]);
+
+        foreach ($games as $game => $column) {
+            if ($column->win == 1 && $column->deleted_at == null) {
+                $updatedResult += $column->bet;
+            }
+            if ($column->win == 0 && $column->deleted_at == null) {
+                $updatedResult -= $column->bet;
+            }
+        }
+        $this->user->result = $updatedResult;
+        $this->user->save();
+        return ($updatedResult);
     }
 }
