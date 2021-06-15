@@ -54,6 +54,9 @@ Route::get('/admin/users/edit/save', [AdminController::class, 'editUser'])->name
 
 Route::get('/admin/games', [AdminController::class, 'generateViewGames'])->name('adminGames')->middleware('roleAllowed:admin');
 Route::get('/admin/games/delete{userId}', [AdminController::class, 'deleteGame'])->name('adminGamesDelete')->middleware('roleAllowed:admin');
+Route::get('/admin/showGames', [AdminController::class, 'showGames'])->name('showGames')->middleware('roleAllowed:admin');
+Route::post('/admin/showGamesSearch', [AdminController::class, 'showGamesSearch'])->name('showGamesSearch')->middleware('roleAllowed:admin');
+
 
 Route::get('/admin/roles', [AdminController::class, 'generateViewRoles'])->name('adminRoles')->middleware('roleAllowed:admin');
 Route::get('/admin/roles/delete{roleId}', [AdminController::class, 'deleteRole'])->name('adminRolesDelete')->middleware('roleAllowed:admin');

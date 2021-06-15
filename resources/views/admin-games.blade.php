@@ -6,59 +6,40 @@
 @section('animated-content')
     <h1>Gry</h1>
     <br>
-
-
-    <div style="overflow-x:auto;">
-        <table class="my-table">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Data utworzenia:</th>
-                    <th>Użytkownik</th>
-                    <th>Kwota</th>
-                    <th>Wygrana/Przegrana</th>
-                    <th>Portfel Przed</th>
-                    <th>Portfel Po</th>
-                    <th>Data aktualizacji:</th>
-                    <th>Zaktualizowana przez</th>
-                    <th>Data usunięcia</th>
-                    <th>Usuń/Przywróć</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($games as $game)
-                    <tr>
-                        <th scope="row">{{ $game->id }}</th>
-                        <td>{{ $game->created_at }}</td>
-                        <td>{{ $game->user_id }}</td>
-                        <td>{{ $game->bet }}</td>
-                        <td>
-                            @if ($game->win)
-                                💸WYGRANA💸
-                            @else
-                                💰PRZEGRANA💰
-                            @endif
-                        </td>
-                        <td>{{ $game->wallet_before }}</td>
-                        <td>{{ $game->wallet_after }}</td>
-                        <td>{{ $game->updated_at }}</td>
-                        <td>{{ $game->updated_by }}</td>
-
-                        @if ($game->deleted_at)
-                            <td>{{ $game->deleted_at }}</td>
-                            <td><a href={{ route('adminGamesDelete', $game->id) }}
-                                    class="pure-button pure-button-primary">♻️</a></td>
-
-                        @else
-                            <td>✅</td>
-                            <td><a href={{ route('adminGamesDelete', $game->id) }}
-                                    class="pure-button pure-button-primary">🗑️</a></td>
-                        @endif
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <form id="search-form" class="pure-form pure-form-stacked">
+        <p><b><br><br>Sortuj po loginie</b></p>
+        <fieldset>
+            <input type="text" name="login"><br />
+            <button type="submit" class="pure-button pure-button-primary">Filtruj</button>
+        </fieldset>
+    </form>
+    <div id="searchdiv">
+        @include('admin-games-table')
     </div>
-    {{ $games->links() }}
+
+    <script type="text/javascript">
+        document.getElementById('search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            ajaxPostForm('search-form', '{{ route('showGamesSearch') }}', 'searchdiv')
+        })
+        // Funkcja wysyłająca dane formularza identyfkowanego przez 'id_form', do podanego adresu 'url'.
+        // Otrzymana odpowiedź zamienia zawartość elementu na stronie o identyfikatorze 'id_to_reload'.
+        function ajaxPostForm(id_form, url, id_to_reload) {
+            var form = document.getElementById(id_form);
+            var formData = new FormData(form);
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    document.getElementById(id_to_reload).innerHTML = xmlHttp.responseText;
+                }
+            }
+            xmlHttp.open("POST", url, true);
+            xmlHttp.send(formData);
+        }
+
+    </script>
+
+
+
 
 @endsection

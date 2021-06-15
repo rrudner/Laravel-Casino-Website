@@ -234,4 +234,38 @@ class AdminController extends Controller
             return back()->with('status', 'Wystąpił błąd podczas edycji.');
         }
     }
+
+
+    public function load_data(Request $request)
+    {
+
+        $login = $request->login;
+
+        $games = DB::table('games')
+            ->leftJoin('users as u1', 'u1.id', 'games.user_id')
+            ->leftJoin('users as u2', 'u2.id', 'games.updated_by')
+            ->select('games.*', 'u1.username as user_id', 'u2.username as updated_by')
+            ->where('u1.username', 'like', "%{$login}%")
+            ->paginate(5);
+
+
+        return $games;
+    }
+
+    public function showGamesSearch(Request $login)
+    {
+        $games = $this->load_data($login);
+        return view('admin-games-table', ['games' => $games]);
+    }
+
+    public function showGames(Request $login)
+    {
+        $games = $this->load_data($login);
+
+        return view('admin-games', [
+            'loggedUser' => Auth::user(),
+            'loggedRole' => $this->checkRole(Auth::user()->role),
+            'games' => $games
+        ]);
+    }
 }
