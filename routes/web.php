@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [GameController::class, 'generateView'])->name('home')->middleware('roleUnallowed:null');
 Route::get('/win{amount}', [GameController::class, 'gameWin'])->name('gameWin')->middleware('roleAllowed:user');
 Route::get('/lose{amount}', [GameController::class, 'gameLose'])->name('gameLose')->middleware('roleAllowed:user');
+Route::get('/win', [GameController::class, 'gameWin0'])->name('gameWin0')->middleware('roleAllowed:user');
+Route::get('/lose', [GameController::class, 'gameLose0'])->name('gameLose0')->middleware('roleAllowed:user');
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout')->middleware('roleUnallowed:null');
 
 Route::get('/account', [AccountController::class, 'generateView'])->name('account')->middleware('roleUnallowed:null');

@@ -2,6 +2,7 @@
 
 <head>
     <title>{{ config('app.name') }} - @yield('title')</title>
+    <link rel="icon" href="{{ config('app.url') }}/resources/css/favicon.png" type="image/x-icon" />
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
         integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
@@ -16,7 +17,11 @@
     <div class="bg">
         <div class="bganimation w3-display-container w3-animate-opacity w3-text-white">
             <div class="w3-display-topleft w3-padding-large w3-xlarge">
-                <a style="text-decoration:none" href={{ route('home') }}>{{ config('app.name') }}</a>
+                <a style="text-decoration:none" href={{ route('home') }}>
+                    <img src="{{ config('app.url') }}/resources/css/favicon.png" alt="Strona Główna" width="25"
+                        height="25">
+                    {{ config('app.name') }}</a>
+
             </div>
 
             @if (isset($loggedUser))

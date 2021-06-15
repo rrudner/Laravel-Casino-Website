@@ -1,5 +1,5 @@
 <html>
-
+<link rel="icon" href="{{ config('app.url') }}/resources/css/favicon.png" type="image/x-icon" />
 @extends('layouts.master')
 @section('title', 'Logowanie')
 

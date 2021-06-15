@@ -61,4 +61,13 @@ class GameController extends Controller
             return redirect()->back()->with('status', 'Przegrałeś :(((')->with('bet', $amount);
         }
     }
+    public function gameWin0()
+    {
+        return redirect()->back()->with('status', 'Nie oszukuj.');
+    }
+
+    public function gameLose0()
+    {
+        return redirect()->back()->with('status', 'Nie oszukuj.');
+    }
 }
