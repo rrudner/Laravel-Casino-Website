@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\GamesAjaxController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -54,6 +55,9 @@ Route::get('/admin/users/edit/save', [AdminController::class, 'editUser'])->name
 
 Route::get('/admin/games', [AdminController::class, 'generateViewGames'])->name('adminGames')->middleware('roleAllowed:admin');
 Route::get('/admin/games/delete{userId}', [AdminController::class, 'deleteGame'])->name('adminGamesDelete')->middleware('roleAllowed:admin');
+
+Route::get('/admin/gamesAjax', [GamesAjaxController::class, 'index'])->name('gamesAjax.index');
+
 Route::get('/admin/showGames', [AdminController::class, 'showGames'])->name('showGames')->middleware('roleAllowed:admin');
 Route::post('/admin/showGamesSearch', [AdminController::class, 'showGamesSearch'])->name('showGamesSearch')->middleware('roleAllowed:admin');
 
