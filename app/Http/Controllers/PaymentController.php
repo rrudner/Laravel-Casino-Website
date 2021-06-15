@@ -34,7 +34,7 @@ class PaymentController extends Controller
             $payment->created_by = $this->user->id;
             $payment->updated_by = $this->user->id;
             $payment->save();
-            return back()->with('status', 'Płatność została zrealizowana pomyślnie');
+            return redirect()->route('home')->with('status', 'Płatność została zrealizowana pomyślnie');
         } else {
             return back()->with('status', 'Płatność nie została zrealizowana');
         }

@@ -2,7 +2,7 @@ const coin = document.querySelector('#coin');
 const buttonHeads = document.querySelector('#flipHeads');
 const buttonTails = document.querySelector('#flipTails');
 const amount = document.querySelector('#amount');
-const url = "http://localhost/Laravel/public";
+const url = document.URL;
 
 function deferFn(callback, ms) {
     setTimeout(callback, ms);
@@ -11,22 +11,18 @@ function deferFn(callback, ms) {
 function processResultHeads(resultHeads) {
     let bet = amount.value;
     if (resultHeads === 'heads') {
-        //
-        window.location.replace(url + "/win" + bet);
+        window.location.replace(url + "win" + bet);
     } else {
-        //
-        window.location.replace(url + "/lose" + bet);
+        window.location.replace(url + "lose" + bet);
     }
 }
 
 function processResultTails(resultTails) {
     let bet = amount.value;
     if (resultTails === 'tails') {
-        //
-        window.location.replace(url + "/win" + bet);
+        window.location.replace(url + "win" + bet);
     } else {
-        //
-        window.location.replace(url + "/lose" + bet);
+        window.location.replace(url + "lose" + bet);
     }
 }
 
@@ -52,7 +48,6 @@ function flipCoinTails() {
 }
 
 buttonHeads.addEventListener('click', flipCoinHeads);
-//z heads jest błąd
 buttonTails.addEventListener('click', flipCoinTails);
 
 //source: https://codepen.io/hisivasankar/pen/yWZbPJ

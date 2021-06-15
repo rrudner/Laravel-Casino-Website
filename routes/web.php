@@ -55,3 +55,4 @@ Route::get('/admin/games/delete{userId}', [AdminController::class, 'deleteGame']
 
 Route::get('/admin/roles', [AdminController::class, 'generateViewRoles'])->name('adminRoles')->middleware('roleAllowed:admin');
 Route::get('/admin/roles/delete{roleId}', [AdminController::class, 'deleteRole'])->name('adminRolesDelete')->middleware('roleAllowed:admin');
+Route::get('/admin/roles/add', [AdminController::class, 'addRole'])->name('adminRolesAdd')->middleware('roleAllowed:admin');

@@ -4,7 +4,7 @@
 
 
 @section('animated-content')
-    <h1>Gry</h1>
+    <h1>Role</h1>
     <br>
 
 
@@ -44,4 +44,8 @@
     </div>
     {{ $roles->links() }}
 
-@endsection
+    <form class="pure-form" action={{ route('adminRolesAdd') }} method='get'>
+        <fieldset>
+            <input type="text" id="rolename" name="rolename" placeholder="nazwa roli" />
+            <button type="submit" class="pure-button pure-button-primary">Dodaj</button>
+        @endsection

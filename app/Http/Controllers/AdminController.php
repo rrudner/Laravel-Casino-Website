@@ -72,6 +72,27 @@ class AdminController extends Controller
         ]);
     }
 
+    public function addRole(Request $request)
+    {
+        $request->validate([
+            'rolename' => 'required'
+        ]);
+        $role = new Role;
+        $role->name = $request->rolename;
+
+        try {
+            $save = $role->save();
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return back()->with('status', 'Rola o tej nazwie już istnieje');
+        }
+
+        if ($save) {
+            return back()->with('status', 'Rola została dodana');
+        } else {
+            return back()->with('status', 'Wystąpił błąd');
+        }
+    }
+
 
 
 
@@ -145,14 +166,15 @@ class AdminController extends Controller
                 return back()->with('status', 'Nie możesz usunąć tej roli.');
             }
 
-            // $users = DB::table('users')
-            //     ->where('role', '=', $roleId);
+            $users = DB::table('users')
+                ->where('role', '=', $roleId)
+                ->get();
 
-            // foreach ($users as $user => $column) {
-            //     $column->role = '2';
-            // }
-
-
+            foreach ($users as $user => $column) {
+                $editedUser = User::where('id', '=', $column->id)->first();
+                $editedUser->role = '1';
+                $editedUser->save();
+            }
 
             $role->save();
             Role::withoutTrashed()->find($roleId)->delete();
@@ -160,7 +182,6 @@ class AdminController extends Controller
         } else {
             Role::withTrashed()->find($roleId)->restore();
             $role = Role::where('id', '=', $roleId)->first();
-            $role->updated_by = $this->user->id;
             $role->save();
             return back()->with('status', 'Gra została przywrócona.');
         }
@@ -181,6 +202,7 @@ class AdminController extends Controller
                 ->where('id', '=', $userId)
                 ->first(),
             'roles' => DB::table('roles')
+                ->where('deleted_at', '=', null)
                 ->get(),
         ]);
     }

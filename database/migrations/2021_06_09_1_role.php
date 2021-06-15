@@ -23,7 +23,7 @@ class Role extends Migration
         });
 
         Schema::table('roles', function (Blueprint $table) {
-            $table->string('name');
+            $table->string('name')->unique();
         });
     }
 

@@ -22,7 +22,7 @@
             @if (isset($loggedUser))
 
                 <div class="w3-display-topright w3-padding">
-                    <a style="text-decoration:none" href={{ route('account') }}>{{ $loggedUser->name }}
+                    <a href={{ route('account') }} class="pure-button pure-button-primary">{{ $loggedUser->name }}
                         {{ $loggedUser->surname }}</a>
 
                     <a href={{ route('logout') }} class="pure-button pure-button-primary">Wyloguj się</a>
@@ -34,6 +34,8 @@
                     @else
                         <a style="text-decoration:none" href={{ route('payment') }}>Twój stan konta:
                             {{ $loggedUser->wallet }}</a>
+                        <br>
+                        <a href={{ route('payment') }} class="pure-button pure-button-primary">Doładuj</a>
                     @endif
                 </div>
 

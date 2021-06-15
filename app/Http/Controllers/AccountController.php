@@ -43,7 +43,6 @@ class AccountController extends Controller
                 $editedUser->city = $request->city;
             }
             if ($request->street) {
-                dd($request->street);
                 $request->validate([
                     'street' => 'min:3|max:30'
                 ]);
